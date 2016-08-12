@@ -1,8 +1,8 @@
 #pragma once
 
-enum EMarker
+enum EMarkers
 {
-	Empty,
+	NoMarker = 0,
 	Cross,
 	Nought
 };

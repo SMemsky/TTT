@@ -1,26 +1,48 @@
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+
+#include "EMarkers.h"
+
+// Graphical representation
 
 class Graphics
 {
+	enum StrikeType
+	{
+		STRIKE_NONE = -1,
+		STRIKE_ROW_1,
+		STRIKE_ROW_2,
+		STRIKE_ROW_3,
+		STRIKE_COL_1,
+		STRIKE_COL_2,
+		STRIKE_COL_3,
+		STRIKE_DIAGONAL_UP,
+		STRIKE_DIAGONAL_DOWN
+	};
 public:
-	Graphics();
+	Graphics(sf::RenderWindow& window);
 	~Graphics();
 
 	void init();
-	void beginScene();
-	void endScene();
-
-	void onResize(unsigned width, unsigned height);
-
-	sf::RenderWindow& getWindow();
+	void draw();
 private:
-	void initWindow();
-	void initGL();
+	void loadResources();
+	void createSprites();
 private:
-	unsigned m_screenWidth = 480;
-	unsigned m_screenHeight = 480;
+	sf::RenderWindow& m_window;
 
-	sf::RenderWindow m_window;
+	sf::Texture m_tileTexture;
+	
+	sf::Sprite m_background;
+	sf::Sprite m_hash;
+	sf::Sprite m_cross;
+	sf::Sprite m_nought;
+	sf::Sprite m_strike;
+	sf::Sprite m_diagonalStrike;
+
+	std::vector<EMarkers> m_grid;
+	StrikeType m_strikeType;
 };

@@ -1,8 +1,11 @@
 #pragma once
 
-#include "Graphics.h"
-#include "Interface.h"
-#include "Engine.h"
+#include <memory>
+
+#include <SFML/Graphics/RenderWindow.hpp>
+
+class Engine;
+class Graphics;
 
 class Game
 {
@@ -13,12 +16,12 @@ public:
 	void init();
 	int run();
 private:
-	void handleEvents();
-	void tick(double deltaTime);
+	void pollEvents();
 private:
-	Graphics m_graphics;
-	Interface m_interface;
-	Engine m_engine;
-
 	bool m_isRunning;
+
+	std::shared_ptr<Engine> m_engine;
+
+	sf::RenderWindow m_window;
+	std::shared_ptr<Graphics> m_graphics;
 };
