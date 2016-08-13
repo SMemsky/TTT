@@ -10,7 +10,8 @@ LDFLAGS = -lsfml-system -lsfml-graphics -lsfml-window
 MAIN_OBJECTS = main.o \
 	Game.o \
 	Graphics.o \
-	Engine.o
+	Engine.o \
+	GameBoard.o
 
 all: game
 
@@ -31,6 +32,9 @@ Graphics.o: Graphics.cpp Graphics.h
 
 Engine.o: Engine.cpp Engine.h
 	$(CXX) $(CXXFLAGS) -c Engine.cpp
+
+GameBoard.o: GameBoard.cpp GameBoard.h
+	$(CXX) $(CXXFLAGS) -c GameBoard.cpp
 
 clean:
 	rm -r *.o

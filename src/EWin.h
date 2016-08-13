@@ -1,0 +1,15 @@
+#pragma once
+
+enum EWin
+{
+	WIN_NONE = -1,
+	WIN_ROW_1,
+	WIN_ROW_2,
+	WIN_ROW_3,
+	WIN_COL_1,
+	WIN_COL_2,
+	WIN_COL_3,
+	WIN_DIAGONAL_UP,
+	WIN_DIAGONAL_DOWN,
+	WIN_DRAW
+};

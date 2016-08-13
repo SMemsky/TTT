@@ -17,6 +17,8 @@ public:
 	int run();
 private:
 	void pollEvents();
+	void update() const;
+	int pressToCell(int x, int y) const;
 private:
 	bool m_isRunning;
 
@@ -24,4 +26,11 @@ private:
 
 	sf::RenderWindow m_window;
 	std::shared_ptr<Graphics> m_graphics;
+
+	struct
+	{
+		unsigned x;
+		unsigned y;
+		bool pressed;
+	} m_mousePress;
 };

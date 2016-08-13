@@ -5,29 +5,21 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "EMarkers.h"
+#include "EWin.h"
 
 // Graphical representation
 
 class Graphics
 {
-	enum StrikeType
-	{
-		STRIKE_NONE = -1,
-		STRIKE_ROW_1,
-		STRIKE_ROW_2,
-		STRIKE_ROW_3,
-		STRIKE_COL_1,
-		STRIKE_COL_2,
-		STRIKE_COL_3,
-		STRIKE_DIAGONAL_UP,
-		STRIKE_DIAGONAL_DOWN
-	};
 public:
 	Graphics(sf::RenderWindow& window);
 	~Graphics();
 
 	void init();
 	void draw();
+
+	void setGridMarker(unsigned x, unsigned y, EMarkers marker);
+	void setWin(EWin win);
 private:
 	void loadResources();
 	void createSprites();
@@ -44,5 +36,5 @@ private:
 	sf::Sprite m_diagonalStrike;
 
 	std::vector<EMarkers> m_grid;
-	StrikeType m_strikeType;
+	EWin m_win;
 };

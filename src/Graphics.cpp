@@ -1,6 +1,6 @@
 #include "Graphics.h"
 
-#include <iostream>
+#include <cassert>
 
 #include <SFML/Window/VideoMode.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -14,12 +14,8 @@ Graphics::Graphics(sf::RenderWindow& window) :
 	m_nought(),
 	m_strike(),
 	m_diagonalStrike(),
-	m_grid({
-		Cross, Nought, NoMarker,
-		Nought, Cross, NoMarker,
-		Nought, NoMarker, Cross
-	}),
-	m_strikeType(STRIKE_DIAGONAL_DOWN)
+	m_grid(9, NoMarker),
+	m_win(WIN_NONE)
 {}
 
 Graphics::~Graphics()
@@ -70,34 +66,39 @@ void Graphics::draw()
 		}
 	}
 
-	switch (m_strikeType)
+	switch (m_win)
 	{
-		case STRIKE_ROW_1:
-		case STRIKE_ROW_2:
-		case STRIKE_ROW_3:
+		case WIN_NONE:
+		case WIN_DRAW:
 		{
-			m_strike.setPosition(0.0f, 160.0f * (m_strikeType - STRIKE_ROW_1));
+			break;
+		}
+		case WIN_ROW_1:
+		case WIN_ROW_2:
+		case WIN_ROW_3:
+		{
+			m_strike.setPosition(0.0f, 160.0f * (m_win - WIN_ROW_1));
 			m_strike.setRotation(0.0f);
 			m_window.draw(m_strike);
 			break;
 		}
-		case STRIKE_COL_1:
-		case STRIKE_COL_2:
-		case STRIKE_COL_3:
+		case WIN_COL_1:
+		case WIN_COL_2:
+		case WIN_COL_3:
 		{
-			m_strike.setPosition(160.0f * (m_strikeType - STRIKE_COL_1), 0.0f);
+			m_strike.setPosition(160.0f * (m_win - WIN_COL_1), 0.0f);
 			m_strike.setRotation(90.0f);
 			m_strike.move(160.0f, 0.0f);
 			m_window.draw(m_strike);
 			break;
 		}
-		case STRIKE_DIAGONAL_UP:
+		case WIN_DIAGONAL_UP:
 		{
 			m_diagonalStrike.setRotation(0.0f);
 			m_window.draw(m_diagonalStrike);
 			break;
 		}
-		case STRIKE_DIAGONAL_DOWN:
+		case WIN_DIAGONAL_DOWN:
 		{
 			m_diagonalStrike.setRotation(90.0f);
 			m_window.draw(m_diagonalStrike);
@@ -105,9 +106,22 @@ void Graphics::draw()
 		}
 		default:
 		{
+			assert(!"Reached default");
 			break;
 		}
 	}
+}
+
+void Graphics::setGridMarker(unsigned x, unsigned y, EMarkers marker)
+{
+	assert(x < 3 && y < 3);
+
+	m_grid[x + y * 3] = marker;
+}
+
+void Graphics::setWin(EWin win)
+{
+	m_win = win;
 }
 
 void Graphics::loadResources()
